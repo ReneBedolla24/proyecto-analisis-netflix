@@ -53,6 +53,52 @@ Se desarrollaron consultas para:
 * Clasificación por rating
 * Géneros más frecuentes
 
+
+
+## SQL Queries destacadas
+
+### Porcentaje de películas vs series
+
+```sql
+SELECT 
+    type,
+    COUNT(*) AS total,
+    ROUND(COUNT(*) * 100.0 / (SELECT COUNT(*) FROM catalogo_final), 2) AS porcentaje
+FROM catalogo_final
+GROUP BY type;
+```
+
+Calcula la proporción de películas y series dentro del catálogo, mostrando tanto el total como su porcentaje respecto al total.
+
+---
+
+### Duración promedio de películas
+
+```sql
+SELECT 
+    ROUND(AVG(duration_min), 2) AS promedio_minutos
+FROM catalogo_final
+WHERE duration_min IS NOT NULL;
+```
+
+Obtiene la duración promedio de las películas en minutos, considerando únicamente registros con valores válidos.
+
+---
+
+### País con más contenido
+
+```sql
+SELECT main_country, COUNT(*) AS total
+FROM catalogo_final
+GROUP BY main_country
+ORDER BY total DESC
+LIMIT 1;
+```
+
+Identifica el país con mayor cantidad de contenido dentro del catálogo.
+
+
+
 ---
 
 ### 4. Conexión a Power BI
